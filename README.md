@@ -1,5 +1,5 @@
 ![Odoo v15.0](https://img.shields.io/badge/build-v15.0-9925be)
-![Odoo Apps](https://img.shields.io/badge/master-apps-success)(https://apps.odoo.com/apps/browse?repo_maintainer_id=496549)
+[![Odoo Apps](https://img.shields.io/badge/master-apps-success)](https://apps.odoo.com/apps/browse?repo_maintainer_id=496549)
 
 Repository for Odoo Module Free
 -------------------------------
