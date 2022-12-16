@@ -1,5 +1,5 @@
 =======================
-Flexible Create Invoice
+Number Widget
 =======================
 
 This module helps you create invoices, this module provides other options for creating invoices.
@@ -14,24 +14,27 @@ Installation
 To install this module, you need to:
 
 go to apps, 
-    - install Web Domain Field.
-    - install Flexible Create Invoice.
-
+    - install Number Widget
 
 =====
 Usage
 =====
 
-To use this module, you need to:
+.. code-block:: xml
+    <field name="integer_field" widget="integer_direct_comma"/>
+    
+    <field name="float_field" widget="float_direct_comma"/>
+    
+    <field name="monetary_field" widget="monetary_direct_comma"/>
 
-just install module to apply this functionality.
+You can also add options according to the default monetary, integer and float widgets.
 
 ===========
 Bug Tracker
 ===========
 
 If you spotted any issue, help us smashing it by providing a detailed and welcomed feedback here.
-contact us for support or help with technical issues. <mailto:newbiedev99@gmail.com>
+contact us for support or help with technical issues. <mailto:agven25@gmail.com>
 
 =======
 Credits
