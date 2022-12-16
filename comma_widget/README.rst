@@ -13,7 +13,7 @@ Installation
 To install this module, you need to:
 
 go to apps, 
-    - install Number Widget
+    - install Comma Widget
 
 =====
 Usage
