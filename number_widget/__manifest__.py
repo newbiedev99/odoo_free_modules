@@ -8,10 +8,6 @@
     "author": "Newbie Dev",
     "website": "https://agvenmuharisrifqi.github.io",
     "depends": ["web"],
-    "data": [
-        'tests/ir.model.access.csv',
-        'tests/train_widget.xml',
-    ],
     "assets": {
         "web.assets_backend": [
             'number_widget/static/src/js/comma_input.js',
