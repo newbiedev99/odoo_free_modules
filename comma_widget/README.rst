@@ -1,9 +1,9 @@
 =======================
-Number Widget
+Comma Widget
 =======================
 
 Adds commas in real-time as you type in an input integer, float, monetary.
-            You can also add options like integer, float, monetary widgets.
+You can also add options like integer, float, monetary widgets.
 
 
 ============
@@ -13,7 +13,7 @@ Installation
 To install this module, you need to:
 
 go to apps, 
-    - install Number Widget
+    - install Comma Widget
 
 =====
 Usage
