@@ -1,6 +1,6 @@
 {
     'name': 'Flexible Create Invoice',
-    'version': '15.0.0.1.0',
+    'version': '15.0.1.0.0',
     'summary': 'Can Create Invoices from Delivery Order or Sale Order',
     'author': 'Newbie Dev',
     'website': 'https://agvenmuharisrifqi.github.io',

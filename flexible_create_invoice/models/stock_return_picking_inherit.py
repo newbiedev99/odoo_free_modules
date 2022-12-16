@@ -1,5 +1,4 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
@@ -22,3 +21,4 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     unique_line = fields.Integer('Unique Line')
+

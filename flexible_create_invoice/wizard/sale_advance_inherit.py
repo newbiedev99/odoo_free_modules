@@ -1,7 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, MissingError
 import json
-import time
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
@@ -45,9 +44,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
     def create_invoices(self):
         if self.create_inv_from == 'delivery_order' and not self.delivery_order_ids:
             raise MissingError(_('You must enter the selected Delivery Order if you are creating an Invoice from a Delivery Order'))
-
+        
         sale_orders = self.env['sale.order'].browse(self._context.get('active_ids', []))
-
         if self.advance_payment_method == 'delivered':
             delivery_ids = []
             create_from_do = False
@@ -67,36 +65,20 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
             sale_line_obj = self.env['sale.order.line']
             for order in sale_orders:
-                if self.advance_payment_method == 'percentage':
-                    amount = order.amount_untaxed * self.amount / 100
-                else:
-                    amount = self.fixed_amount
+                amount, name = self._get_advance_details(order)
+
                 if self.product_id.invoice_policy != 'order':
                     raise UserError(_('The product used to invoice a down payment should have an invoice policy set to "Ordered quantities". Please update your deposit product to be able to create a deposit invoice.'))
                 if self.product_id.type != 'service':
                     raise UserError(_("The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."))
                 taxes = self.product_id.taxes_id.filtered(lambda r: not order.company_id or r.company_id == order.company_id)
-                if order.fiscal_position_id and taxes:
-                    tax_ids = order.fiscal_position_id.map_tax(taxes, self.product_id, order.partner_shipping_id).ids
-                else:
-                    tax_ids = taxes.ids
-                context = {'lang': order.partner_id.lang}
+                tax_ids = order.fiscal_position_id.map_tax(taxes).ids
                 analytic_tag_ids = []
                 for line in order.order_line:
                     analytic_tag_ids = [(4, analytic_tag.id, None) for analytic_tag in line.analytic_tag_ids]
-                so_line = sale_line_obj.create({
-                    'name': _('Down Payment: %s') % (time.strftime('%m %Y'),),
-                    'price_unit': amount,
-                    'product_uom_qty': 0.0,
-                    'order_id': order.id,
-                    'discount': 0.0,
-                    'product_uom': self.product_id.uom_id.id,
-                    'product_id': self.product_id.id,
-                    'analytic_tag_ids': analytic_tag_ids,
-                    'tax_id': [(6, 0, tax_ids)],
-                    'is_downpayment': True,
-                })
-                del context
+
+                so_line_values = self._prepare_so_line(order, analytic_tag_ids, tax_ids, amount)
+                so_line = sale_line_obj.create(so_line_values)
                 self._create_invoice(order, so_line, amount)
         if self._context.get('open_invoices', False):
             return sale_orders.action_view_invoice()

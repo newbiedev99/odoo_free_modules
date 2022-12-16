@@ -14,7 +14,7 @@ class AccountMove(models.Model):
                 delivery.invoice_number = name
             
         for rec in self:
-            if rec.type in ['out_invoice', 'in_invoice'] and rec.state != 'cancel':
+            if rec.move_type in ['out_invoice', 'in_invoice'] and rec.state != 'cancel':
                 change_invoice_number(rec.delivery_ids, rec.name)
                 rec.invoice_do_flag = True
             else:

@@ -17,27 +17,37 @@ class SaleOrderLine(models.Model):
             unique_number = randint(1, 9999999)
         self.unique_line = unique_number
 
-    def _prepare_invoice_line_do(self, quantity_do=0):
+    def _prepare_invoice_line_do(self, **optional_values):
         """
         Prepare the dict of values to create the new invoice line for a sales order line.
 
         :param qty: float quantity to invoice
+        :param optional_values: any parameter that should be added to the returned invoice line
         """
         self.ensure_one()
-        return {
+        res = {
             'display_type': self.display_type,
             'sequence': self.sequence,
             'name': self.name,
             'product_id': self.product_id.id,
             'product_uom_id': self.product_uom.id,
-            'quantity': quantity_do,
+            'quantity': self.qty_to_invoice,
             'discount': self.discount,
             'price_unit': self.price_unit,
             'tax_ids': [(6, 0, self.tax_id.ids)],
-            'analytic_account_id': self.order_id.analytic_account_id.id,
             'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
             'sale_line_ids': [(4, self.id)],
         }
+        if self.order_id.analytic_account_id and not self.display_type:
+            res['analytic_account_id'] = self.order_id.analytic_account_id.id
+        quantity_do = optional_values.get('quantity_do', 0)
+        res['quantity'] = quantity_do if quantity_do >= 0 else 0
+        optional_values.pop('quantity_do')
+        if optional_values:
+            res.update(optional_values)
+        if self.display_type:
+            res['account_id'] = False
+        return res
 
     # Send Unique Line Stock Move in DO
     def _prepare_procurement_values(self, group_id=False):

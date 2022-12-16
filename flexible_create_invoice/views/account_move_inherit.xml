@@ -8,8 +8,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_date']" position="after">
                 <field name="delivery_ids" widget="many2many_tags"
-                        attrs="{'readonly': [('type', 'in', ('out_invoice', 'in_invoice'))],
-                                'invisible': [('type', 'not in', ('out_invoice', 'in_invoice'))]}" />
+                        attrs="{'readonly': [('move_type', 'in', ('out_invoice', 'in_invoice'))],
+                                'invisible': [('move_type', 'not in', ('out_invoice', 'in_invoice'))]}" />
                 <field name="invoice_do_flag" invisible="1" />
             </xpath>
         </field>
