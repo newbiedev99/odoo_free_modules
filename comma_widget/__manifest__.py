@@ -14,7 +14,7 @@
         ],
     },
     'images': [
-        'static/description/field_in_tree_view.gif',
+        'static/description/field_float.gif',
     ],
     "installable": True,
 }
