@@ -11,5 +11,8 @@
     "data": [
         'assets/assets.xml',
     ],
+    'images': [
+        'static/description/field_float.gif',
+    ],
     "installable": True,
 }
