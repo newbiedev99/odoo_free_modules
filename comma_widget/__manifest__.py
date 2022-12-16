@@ -1,5 +1,5 @@
 {
-    "name": "Number Widget",
+    "name": "Comma Widget",
     "summary": """
         Widget Comma in Number Field
     """,
