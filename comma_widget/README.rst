@@ -2,9 +2,8 @@
 Number Widget
 =======================
 
-This module helps you create invoices, this module provides other options for creating invoices.
-By default, odoo only provides one option for creating invoices, and we added another option, namely Delivery Order.
-So you can create an invoice based on a Sale Order or Delivery Order.
+Adds commas in real-time as you type in an input integer, float, monetary.
+            You can also add options like integer, float, monetary widgets.
 
 
 ============

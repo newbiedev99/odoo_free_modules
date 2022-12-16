@@ -18,7 +18,7 @@ odoo.define('number_widget.DirectComma', function (require) {
         },
         _onKeyUp: function(e){
             var val = e.target.value;
-            val = val.replace(/[^0-9\.]/g, '') // Remove char except digit and .
+            val = val.replace(/[^0-9\.]/gmi, '') // Remove char except digit and .
             var front = val.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/gm, ',');
             var back = val.match(/\./g) ? '.' + val.split('.')[1].replace(',', '') : '';
             e.target.value = front + back;
@@ -40,12 +40,10 @@ odoo.define('number_widget.DirectComma', function (require) {
         },
         _onKeyUp: function(e){
             var val = e.target.value;
-            if (val.length > 1){
-                val = val.replace(/^0*/g, '') // Remove 0 in front
-            }
-            val = val.replace(/[^0-9]/g, '') // Remove char except digit and .
+            val = val.replace(/[^0-9\.]/g, '') // Remove char except digit and .
             var front = val.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/gm, ',');
-            e.target.value = front;
+            var back = val.match(/\./g) ? '.' + val.split('.')[1].replace(',', '') : '';
+            e.target.value = front + back;
         },
         _onFocusOut: function(e){
             var input = ''

@@ -4,7 +4,7 @@
 Repository for Odoo Module Free
 -------------------------------
 
-Repository which is used to store the odoo modules that I made and is free for you to use.
+Repository which is used to store the odoo modules that We made and is free for you to use.
 
 Please support us with
 - [x] Don't forget to give stars
