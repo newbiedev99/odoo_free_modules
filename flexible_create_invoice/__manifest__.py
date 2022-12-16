@@ -18,7 +18,6 @@
     ],
     'images': [
         'static/description/create_invoice.png',
-        'static/description/result_invoice.png',
     ],
     'demo': [],
     'auto_install': False,

@@ -13,5 +13,8 @@
             'number_widget/static/src/js/comma_input.js',
         ],
     },
+    'images': [
+        'static/description/field_in_tree_view.gif',
+    ],
     "installable": True,
 }
