@@ -5,7 +5,7 @@
     'author': 'Newbie Dev',
     'website': 'https://agvenmuharisrifqi.github.io',
     'license': 'AGPL-3',
-    'category': 'Hidden/Tools',
+    'category': 'Custom/Custom',
     'depends': [
         'base', 'web'
     ],
