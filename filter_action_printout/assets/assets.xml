@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="filter_action_printout" name="Filter Action Printout Assets" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <script type="text/javascript" src="/filter_action_printout/static/src/js/action_menus.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
