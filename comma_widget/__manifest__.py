@@ -10,7 +10,7 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            'number_widget/static/src/js/comma_input.js',
+            'comma_widget/static/src/js/comma_input.js',
         ],
     },
     'images': [
