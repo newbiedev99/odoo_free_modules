@@ -1,8 +1,8 @@
 <odoo>
     <data>
-        <template id="number_widget_assets" name="Number Widget Assets" inherit_id="web.assets_backend">
+        <template id="comma_widget_assets" name="Comma Widget Assets" inherit_id="web.assets_backend">
             <xpath expr=".">
-                <script type="text/javascript" src="/number_widget/static/src/js/comma_input.js"/>
+                <script type="text/javascript" src="/comma_widget/static/src/js/comma_input.js"/>
             </xpath>
         </template>
     </data>
