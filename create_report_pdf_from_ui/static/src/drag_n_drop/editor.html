@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Drag n Drop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="paper_sizes.js"></script>
+    <script type="text/javascript" src="tinymce/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        const FONT_SIZES = [
+            
+        ]
+        tinymce.init({
+            selector: '#editor__content',
+            skins: 'material-classic',
+            content_css: 'dark',
+            icon: 'small',
+            menubar: false,
+            inline: true,
+            plugins: 'quickbars table lists advlist image editimage link searchreplace preview',
+            toolbar: false,
+            quickbars_insert_toolbar: 'quicktable image | blocks fontfamily fontsize | link indent outdent',
+            quickbars_selection_toolbar: 'blocks fontsize forecolor backcolor | bold italic underline | alignleft aligncenter alignright alignjustify | link superscript subscript indent outdent',
+            quickbars_image_toolbar: 'alignleft aligncenter alignright | rotateleft rotateright | imageoptions',
+            block_formats: 'Paragraph=p; Heading 1=h1; Heading 2=h2; Heading 3=h3; Heading 4=h4; Heading 5=h5; Heading 6=h6',
+            color_map: [
+                '#BFEDD2', 'Light Green',
+                '#FBEEB8', 'Light Yellow',
+                '#F8CAC6', 'Light Red',
+                '#ECCAFA', 'Light Purple',
+                '#C2E0F4', 'Light Blue',
+
+                '#2DC26B', 'Green',
+                '#F1C40F', 'Yellow',
+                '#E03E2D', 'Red',
+                '#B96AD9', 'Purple',
+                '#3598DB', 'Blue',
+
+                '#169179', 'Dark Turquoise',
+                '#E67E23', 'Orange',
+                '#BA372A', 'Dark Red',
+                '#843FA1', 'Dark Purple',
+                '#236FA1', 'Dark Blue',
+
+                '#ECF0F1', 'Light Gray',
+                '#CED4D9', 'Medium Gray',
+                '#95A5A6', 'Gray',
+                '#7E8C8D', 'Dark Gray',
+                '#34495E', 'Navy Blue',
+
+                '#000000', 'Black',
+                '#ffffff', 'White'
+            ],
+            font_size_formats: '8pt 10pt 11pt 12pt 13pt 14pt 15pt 16pt 18pt 20pt 24pt 26pt 28pt 30pt 32pt 33pt 36pt 48pt',
+            link_context_toolbar: true,
+            image_title: true,
+            automatic_uploads: true,
+            file_picker_types: 'image',
+            file_picker_callback: (cb, value, meta) => {
+                const input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    reader.addEventListener('load', () => {
+                        const id = 'blobid' + (new Date()).getTime();
+                        const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                        const base64 = reader.result.split(',')[1];
+                        const blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    });
+                    reader.readAsDataURL(file);
+                });
+                input.click();
+            },
+            setup: (editor) => {
+                editor.ui.registry.addGroupToolbarButton('alignment', {
+                    icon: 'align-left',
+                    tooltip: 'Alignment',
+                    items: 'alignleft aligncenter alignright | alignjustify'
+                });
+            },
+            content_style: '#editor__content { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        })
+    </script>
+</head>
+<body>
+    <div style="background-color: #008DCA; height: 46px;"></div>
+    <div class="container__custom__report">
+        <div class="paper__container">
+            <div class="paper__wrapper">
+                <div class="paper" id="paper">
+                    <div class="paper__top"></div>
+                    <div class="content">
+                        <table class="table__content">
+                            <tbody>
+                                <tr>
+                                    <td id="paper__left"></td>
+                                    <td class="editor" id="editor__wrapper" style="width: 210mm; height: 297mm;">
+                                        <div id="editor__content" contenteditable="true" placeholder="Type your report here...">
+                                        </div>
+                                    </td>
+                                    <td id="paper__right"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="paper__bottom"></div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="button__wrapper">
+                <p class="button__toggle" id="button_configuration">Configuration Paper</p>
+            </div>
+            <div class="configuration__wrapper" id="configuration__wrapper">
+                <h3 class="header__sidebar">STYLE PAPER</h3>
+                <div class="configuration__content">
+                    <ul class="configuration__list">
+                        <li class="confifuration__item">
+                            <p class="title__item">Paper Size</p>
+                            <ul class="configuration__sublist">
+                                <li class="input__wrapper">
+                                    <label for="size_paper">Size :</label>
+                                    <select class="input__config" name="size_paper" id="size_paper">
+                                        <option value="A0">A0</option>
+                                        <option value="A1">A1</option>
+                                        <option value="A2">A2</option>
+                                        <option value="A3">A3</option>
+                                        <option value="A4" selected>A4</option>
+                                        <option value="A5">A5</option>
+                                        <option value="A6">A6</option>
+                                        <option value="A7">A7</option>
+                                        <option value="A8">A8</option>
+                                        <option value="A9">A9</option>
+                                        <option value="B0">B0</option>
+                                        <option value="B1">B1</option>
+                                        <option value="B2">B2</option>
+                                        <option value="B3">B3</option>
+                                        <option value="B4">B4</option>
+                                        <option value="B5">B5</option>
+                                        <option value="B6">B6</option>
+                                        <option value="B7">B7</option>
+                                        <option value="B8">B8</option>
+                                        <option value="B9">B9</option>
+                                        <option value="B10">B10</option>
+                                        <option value="C5E">C5E</option>
+                                        <option value="Comm10E">Comm10E</option>
+                                        <option value="DLE">DLE</option>
+                                        <option value="Executive">Executive</option>
+                                        <option value="Folio">Folio</option>
+                                        <option value="Ledger">Ledger</option>
+                                        <option value="Legal">Legal</option>
+                                        <option value="Letter">Letter</option>
+                                        <option value="Tabloid">Tabloid</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                </li>
+                                <li class="input__wrapper">
+                                    <label for="height_paper">Height <sup><strong>mm</strong></sup> :</label>
+                                    <input type="number" class="input__config" min="0" name="height_paper" id="height_paper" value="0" disabled="true"/>
+                                </li>
+                                <li class="input__wrapper">
+                                    <label for="width_paper">Width <sup><strong>mm</strong></sup> :</label>
+                                    <input type="number" class="input__config" min="0" name="width_paper" id="width_paper" value="0" disabled="true"/>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="confifuration__item">
+                            <p class="title__item">Margins <sup><strong>mm</strong></sup></p>
+                            <ul class="configuration__sublist">
+                                <li class="input__wrapper">
+                                    <label for="left_margin">Left :</label>
+                                    <input type="number" class="input__config" min="0" name="left_margin" id="left_margin" value="0"/>
+                                </li>
+                                <li class="input__wrapper">
+                                    <label for="right_margin">Right :</label>
+                                    <input type="number" class="input__config" min="0" name="right_margin" id="right_margin" value="0"/>
+                                </li>
+                                <li class="input__wrapper">
+                                    <label for="top_margin">Top :</label>
+                                    <input type="number" class="input__config" min="0" name="top_margin" id="top_margin" value="0"/>
+                                </li>
+                                <li class="input__wrapper">
+                                    <label for="bottom_margin">Bottom :</label>
+                                    <input type="number" class="input__config" min="0" name="bottom_margin" id="bottom_margin" value="0"/>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <button id="submit__report">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // const paperSize = {
+        //     height: 297,
+        //     width: 210,
+        // }
+        var leftP = 0,
+            rightP = 0,
+            topP = 0,
+            bottomP = 0;
+        
+        /* BUTTON CONFIGURATION PAPER */
+        const configWrapper = document.getElementById('configuration__wrapper')
+        const buttonConfig = document.getElementById('button_configuration')
+        buttonConfig.addEventListener('click', (e) => {
+            configWrapper.classList.toggle('active')
+        })
+
+        // /* SIZE PAPER */
+        // const editor = document.getElementById('editor__wrapper')
+        // const paper = document.getElementById('paper')
+        // const paperSize = document.getElementById('size_paper')
+        // const paperHeight = document.getElementById('height_paper')
+        // const paperWidth = document.getElementById('width_paper')
+        // paperSize.addEventListener('change', (e) => {
+        //     let value = e.target.value
+        //     let height = 0
+        //     let width = 0
+        //     if (value === 'custom'){
+        //         paperHeight.disabled = false
+        //         paperHeight.value = 0
+        //         paperWidth.disabled = false
+        //         paperWidth.value = 0
+        //     }else {
+        //         paperHeight.disabled = true
+        //         paperHeight.value = PAPER_SIZES[value].height
+        //         paperWidth.disabled = true
+        //         paperWidth.value = PAPER_SIZES[value].width
+        //         paper.style.height = PAPER_SIZES[value].height + 'mm'
+        //         paper.style.width = PAPER_SIZES[value].width + 'mm'
+        //         editor.style.height = PAPER_SIZES[value].height + 'mm'
+        //         editor.style.width = PAPER_SIZES[value].width + 'mm'
+        //     }
+        // })
+
+        // const paper = document.getElementById('paper')
+        // paper.style.width = PAPER_SIZES.A0.width
+        // paper.style.height = PAPER_SIZES.A0.height
+
+
+
+        const buttonSubmit = document.getElementById('submit__report')
+        buttonSubmit.addEventListener('click', (e) => {
+            e.preventDefault()
+            tinymce.activeEditor.execCommand('mceLink');
+            // tinymce.activeEditor.execCommand('mcePreview');
+        })
+        // const editorWrapper = document.getElementById('editor__wrapper')
+
+        // const leftMargin = document.getElementById('left_margin')
+        // const paperLeft = document.getElementById('paper__left')
+
+        // leftMargin.addEventListener('change', (e) => {
+        //     var value = e.target.value
+        //     leftP = parseInt(value)
+        //     editorWidth = paper.width - (rightP + leftP)
+        //     editorWrapper.style.width = editorWidth + 'mm'
+        //     paperLeft.style.width = value + 'mm'
+        // })
+
+        // const rightMargin = document.getElementById('right_margin')
+        // const paperRight = document.getElementById('paper__right')
+
+        // rightMargin.addEventListener('change', (e) => {
+        //     var value = e.target.value
+        //     rightP = parseInt(value)
+        //     editorWidth = paper.width - (rightP + leftP)
+        //     editorWrapper.style.width = editorWidth + 'mm'
+        //     paperRight.style.width = value + 'mm'
+        // })
+
+        // buttonSubmit.addEventListener('click', (e) => {
+        //     const paper = document.querySelector('.paper')
+        //     console.log(paper.innerHTML)
+        // })
+    </script>
+</body>
+</html>

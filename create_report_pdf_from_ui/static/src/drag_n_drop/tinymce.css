@@ -1,0 +1,289 @@
+/* RESET */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* ALL */
+.editor__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #333333;
+}
+
+/* TOOLBAR */
+.toolbar__container {
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.toolbar__bottom, .toolbar__upper {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+/* TOOLBAR TYPOGRAPHY */
+.toolbar__typography {
+    display: flex;
+    gap: 10px;
+}
+
+.typography {
+    display: flex;
+}
+
+.toolbar__selection {
+    outline: none;
+    border: none;
+    padding: 5px 10px;
+    height: 27px;
+    font-size: 13px;
+    background-color: rgba(255, 255, 255, .1);
+    color: white;
+    border-bottom-left-radius: .375rem;
+    border-top-left-radius: .375rem;
+}
+
+.toolbar__selection:focus {
+    border: 2px solid #ed5f5d;
+    padding: 3px 8px;
+}
+
+.selection__list__wrapper {
+    position: relative;
+}
+
+.button__selection {
+    border: none;
+    margin: 0;
+    height: 27px;
+    margin-left: 1px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, .4);
+    border-top-right-radius: .375rem;
+    border-bottom-right-radius: .375rem;
+    display: flex;
+    align-items: center;
+}
+
+.button__selection i {
+    font-size: 12px;
+    color: rgba(255, 255, 255, .7);
+}
+
+.button__selection.active {
+    background-color: #ed5f5d;
+}
+
+.button__selection.active ~ .selection__list {
+    display: block;
+}
+
+.selection__list {
+    display: none;
+    position: absolute;
+    list-style: none;
+    top: 30px;
+    max-height: 75vh;
+    overflow: auto;
+    right: 0;
+    z-index: 2;
+    color: white;
+    background-color: #333333;
+    border-radius: .075rem;
+    border: 1px solid rgba(255, 255, 255, .5);
+    white-space: nowrap;
+}
+
+.selection__list .selection__item:hover {
+    background-color: #ed5f5d;
+}
+
+.selection__list .selection__item {
+    padding: 5px 10px;
+    cursor: default;
+}
+
+.selection__list .selection__item h1 {
+    font-size: 32px;
+}
+
+.selection__list .selection__item h2 {
+    font-size: 26px;
+}
+
+.selection__list .selection__item h3 {
+    font-size: 22px;
+}
+
+.selection__list .selection__item h4 {
+    font-size: 18px;
+}
+
+.selection__list .selection__item h5 {
+    font-size: 16px;
+}
+
+.selection__list .selection__item h6 {
+    font-size: 12px;
+}
+
+.selection__list .selection__item p {
+    font-size: 14px;
+}
+
+/* TOOLBAR STYLES */
+.toolbar__sytles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button__toggle {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding: 3px 7px;
+    height: 30px;
+    border-radius: .175rem;
+}
+
+.button__toggle:hover {
+    background-color: #696969;
+}
+
+.button__toggle i {
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.button__styles i {
+    color: #ECF2FF;
+    /* color: rgba(255, 255, 255, .7); */
+}
+
+.button__sub i,
+.button__sup i {
+    color: #ECF2FF;
+    /* color: #F2921D; */
+}
+
+.button__clear i {
+    color: #ECF2FF;
+    /* color: #FF9F9F; */
+}
+
+.button__align i {
+    color: #ECF2FF;
+}
+
+
+/* TOOLBAR TOOL */
+.toolbar__tool {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.button__undo i,
+.button__redo i {
+    color: #ECF2FF;
+}
+
+.button__undo.active i,
+.button__redo.active i {
+    color: #F2921D;
+}
+
+.button__save {
+    background-color: #22d3ee;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 0 10px;
+}
+
+.button__save:hover {
+    background-color: #06b6d4;
+}
+
+.button__save span {
+    font-size: 14px;
+    color: white;
+    font-weight: 500;
+}
+
+.button__save i {
+    color: white;
+}
+
+.button__find__replace i {
+    color: #ECF2FF;
+    /* color: #d1d5db; */
+}
+
+.button__break svg {
+    fill: #ECF2FF;
+    /* fill: #FFFFFF; */
+}
+
+.button__image i {
+    color: #ECF2FF;
+    /* color: #be185d; */
+}
+
+.button__link {
+    color: #ECF2FF;
+}
+
+/* PAPER CONTENT */
+.paper__container {
+    position: relative;
+    width: 100vw;
+    display: flex;
+    overflow: auto;
+}
+.paper__wrapper {
+    padding: 10mm;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10mm;
+}
+.paper {
+    margin: auto;
+    height: 210mm;
+    width: 297mm;
+    background-color: white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .2);
+}
+.editor {
+    height: 100%;
+    width: 100%;
+    border: 1px dotted black;
+    color: black;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.editor:focus {
+    outline: none;
+}
+
+.inline__field {
+    background-color: #1d4ed8;
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+}

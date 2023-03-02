@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+    <t t-name="ReportPdfEditorTemplate">
+        <h1>Percobaan Editor</h1>
+        <div class="editor" id="editor__wrapper" style="width: 210mm; height: 297mm;">
+            <div id="editor__content" contenteditable="true" placeholder="Type your report here..."></div>
+        </div>
+    </t>
+</template>
