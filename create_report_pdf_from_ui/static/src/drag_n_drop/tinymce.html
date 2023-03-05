@@ -12,17 +12,20 @@
     <script src="https://kit.fontawesome.com/69f952805c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="tinymce.css"/>
     <script type="text/javascript" src="tinymce/js/tinymce/tinymce.min.js"></script>
+    <!-- <script src="https://cdn.tiny.cloud/1/3s8ul6qghaen603dqp6fjpfmk9vhj1zvjlecz8vmt30ysshx/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
     <script type="text/javascript">
         tinymce.init({
             selector: '.editor',
             icon: 'small',
             menubar: false,
             inline: true,
-            plugins: 'emoticons charmap quickbars table lists advlist image editimage link searchreplace preview',
+            plugins: 'emoticons charmap table lists advlist image editimage link searchreplace preview code',
             toolbar: false,
-            quickbars_insert_toolbar: 'quicktable image',
-            quickbars_selection_toolbar: 'lineheight | forecolor backcolor | alignleft aligncenter alignright alignjustify',
+            // quickbars_insert_toolbar: 'quicktable image bullist numlist',
+            // quickbars_selection_toolbar: 'fontsize lineheight | forecolor backcolor | alignleft aligncenter alignright alignjustify',
             quickbars_image_toolbar: 'alignleft aligncenter alignright | rotateleft rotateright',
+            indentation: '20pt',
+            indent_use_margin: true,
             color_map: [
                 '#BFEDD2', 'Light Green',
                 '#FBEEB8', 'Light Yellow',
@@ -79,7 +82,9 @@
             },
             paste_preprocess: function(plugin, args) {
                 args.content = args.content.replace(/data-mce-style/gi, 'style');
-            }
+            },
+            fontsize_formats: '8px 10px 12px 16px 20px 36px',
+            content_style: 'body { font-family: Arial, Helvetica, sans-serif; font-size: 16px; }'
         })
     </script>
 </head>
@@ -92,7 +97,7 @@
                         <button id="btn_save" class="button__toggle button__save" title="Save Template"><span>Save</span> <i class="fa-solid fa-floppy-disk"></i></button>
                     </div>
                     <div class="undo__redo__wrapper">
-                        <button class="button__toggle button__undo active" title="Undo"><i class="fa-solid fa-reply"></i></button>
+                        <button class="button__toggle button__undo" title="Undo"><i class="fa-solid fa-reply"></i></button>
                         <button class="button__toggle button__undo" title="Redo"><i class="fa-solid fa-share"></i></button>
                     </div>
                     <div class="find__replace__wrapper">
@@ -105,7 +110,7 @@
                         <button id="imageBTN" class="button__toggle button__image" title="Insert Image"><i class="fa-regular fa-image"></i></button>
                     </div>
                     <div class="link__wrapper">
-                        <button class="button__toggle button__link" title="Insert Link"><i class="fa-solid fa-link"></i></button>
+                        <button id="linkBTN" class="button__toggle button__link" title="Insert Link"><i class="fa-solid fa-link"></i></button>
                     </div>
                     <div class="table__wrapper">
                         <button id="tableBTN" class="button__toggle button__table" title="Insert Table"><i class="fa-solid fa-table"></i></button>
@@ -119,92 +124,92 @@
                     <div class="setting__paper__wrapper">
                         <button id="papersettingsBTN" class="button__toggle button__setting__paper" title="Paper Settings"><i class="fa-regular fa-file"></i></button>
                     </div>
+                    <div class="setting__paper__wrapper">
+                        <button id="codeBTN" class="button__toggle button__code" title="HTML Code"><i class="fa-solid fa-code"></i></button>
+                    </div>
                     <div class="faq__wrapper">
                         <button class="button__toggle button__faq" title="Help"><i class="fa-regular fa-circle-question"></i></button>
-                    </div>
-                    <div class="cursor__wrapper">
-                        <button id="cursor" class="button__toggle button__cursor" title="Cursor"><i class="fa-solid fa-arrow-pointer"></i></button>
                     </div>
                 </div>
             </div>
             <div class="toolbar__bottom">
                 <div class="toolbar__typography">
                     <div class="typography selection__wrapper" title="Paragraph Style">
-                        <input type="text" disabled class="toolbar__selection" style="width: 150px;" id="typography__name" value="Paragraph"/>
+                        <input type="text" disabled class="toolbar__selection" style="width: 150px;" id="block__name"/>
                         <div class="selection__list__wrapper">
                             <button class="button__selection"><i class="fa-solid fa-caret-down"></i></button>
                             <ul class="selection__list" style="min-width: 180px;">
-                                <li class="selection__item" value="Paragraph"><p>Paragraph</p></li>
-                                <li class="selection__item" value="Heading 1"><h1>Heading 1</h1></li>
-                                <li class="selection__item" value="Heading 2"><h2>Heading 2</h2></li>
-                                <li class="selection__item" value="Heading 3"><h3>Heading 3</h3></li>
-                                <li class="selection__item" value="Heading 4"><h4>Heading 4</h4></li>
-                                <li class="selection__item" value="Heading 5"><h5>Heading 5</h5></li>
-                                <li class="selection__item" value="Heading 6"><h6>Heading 6</h6></li>
+                                <li class="format__block__button selection__item" value="Paragraph"><p>Paragraph</p></li>
+                                <li class="format__block__button selection__item" value="Heading 1"><h1>Heading 1</h1></li>
+                                <li class="format__block__button selection__item" value="Heading 2"><h2>Heading 2</h2></li>
+                                <li class="format__block__button selection__item" value="Heading 3"><h3>Heading 3</h3></li>
+                                <li class="format__block__button selection__item" value="Heading 4"><h4>Heading 4</h4></li>
+                                <li class="format__block__button selection__item" value="Heading 5"><h5>Heading 5</h5></li>
+                                <li class="format__block__button selection__item" value="Heading 6"><h6>Heading 6</h6></li>
                             </ul>
                         </div>
                     </div>
                     <div class="typography selection__wrapper" title="Font Name">
-                        <input type="text" disabled class="toolbar__selection" style="width: 150px;" id="typography__name" value="Arial"/>
+                        <input type="text" disabled class="toolbar__selection" style="width: 150px;" id="font__name"/>
                         <div class="selection__list__wrapper">
                             <button class="button__selection"><i class="fa-solid fa-caret-down"></i></button>
                             <ul class="selection__list" style="min-width: 200px;">
-                                <li class="selection__item" value="Times New Roman">
+                                <li class="format__name__button selection__item" value="Times New Roman">
                                     <p style="font-family: times new roman,times;">Times New Roman</p>
                                 </li>
-                                <li class="selection__item" value="Andale Mono">
+                                <li class="format__name__button selection__item" value="Andale Mono">
                                     <p style="font-family: andale mono, times;">Andale Mono</p>
                                 </li>
-                                <li class="selection__item" value="Arial">
+                                <li class="format__name__button selection__item" value="Arial">
                                     <p style="font-family: Arial, Helvetica, sans-serif;">Arial</p>
                                 </li>
-                                <li class="selection__item" value="Arial Black">
+                                <li class="format__name__button selection__item" value="Arial Black">
                                     <p style="font-family: arial black,avant garde;">Arial Black</p>
                                 </li>
-                                <li class="selection__item" value="Book Antiqua">
+                                <li class="format__name__button selection__item" value="Book Antiqua">
                                     <p style="font-family: book antiqua,palatino;">Book Antiqua</p>
                                 </li>
-                                <li class="selection__item" value="Verdana">
+                                <li class="format__name__button selection__item" value="Verdana">
                                     <p style="font-family: verdana,geneva;">Verdana</p>
                                 </li>
-                                <li class="selection__item" value="Courier New">
+                                <li class="format__name__button selection__item" value="Courier New">
                                     <p style="font-family: courier new,courier;">Courier New</p>
                                 </li>
-                                <li class="selection__item" value="Comic Sans MS">
+                                <li class="format__name__button selection__item" value="Comic Sans MS">
                                     <p style="font-family: comic sans ms;">Comic Sans MS</p>
                                 </li>
-                                <li class="selection__item" value="Georgia">
+                                <li class="format__name__button selection__item" value="Georgia">
                                     <p style="font-family: georgia,palatino;">Georgia</p>
                                 </li>
-                                <li class="selection__item" value="Helvetica">
+                                <li class="format__name__button selection__item" value="Helvetica">
                                     <p style="font-family: helvetica;">Helvetica</p>
                                 </li>
-                                <li class="selection__item" value="Impact">
+                                <li class="format__name__button selection__item" value="Impact">
                                     <p style="font-family: impact,chicago;">Impact</p>
                                 </li>
-                                <li class="selection__item" value="Symbol">
+                                <li class="format__name__button selection__item" value="Symbol">
                                     <p style="font-family: symbol;">Symbol</p>
                                 </li>
-                                <li class="selection__item" value="Impact">
+                                <li class="format__name__button selection__item" value="Impact">
                                     <p style="font-family: impact,chicago;">Impact</p>
                                 </li>
-                                <li class="selection__item" value="Tahoma">
+                                <li class="format__name__button selection__item" value="Tahoma">
                                     <p style="font-family: tahoma,arial,helvetica,sans-serif;">Tahoma</p>
                                 </li>
-                                <li class="selection__item" value="Terminal">
+                                <li class="format__name__button selection__item" value="Terminal">
                                     <p style="font-family: terminal,monaco;">Terminal</p>
                                 </li>
-                                <li class="selection__item" value="Trebuchet MS">
+                                <li class="format__name__button selection__item" value="Trebuchet MS">
                                     <p style="font-family: trebuchet ms,geneva;">Trebuchet MS</p>
                                 </li>
-                                <li class="selection__item" value="Webdings">
+                                <li class="format__name__button selection__item" value="Webdings">
                                     <p style="font-family: webdings;">Webdings</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="typography selection__wrapper" title="Font Size">
-                        <input type="text" class="toolbar__selection" style="width: 70px;" id="font__size" value="14 pt"/>
+                        <input type="text" class="toolbar__selection" style="width: 70px;" id="font__size"/>
                         <div class="selection__list__wrapper">
                             <button class="button__selection"><i class="fa-solid fa-caret-down"></i></button>
                             <ul class="selection__list" style="min-width: 100px;">
@@ -241,23 +246,23 @@
                 </div>
                 <div class="toolbar__sytles">
                     <div class="styles__wrapper">
-                        <button class="button__toggle button__styles" title="Bold"><i class="fa-solid fa-bold"></i></button>
-                        <button class="button__toggle button__styles" title="Italic"><i class="fa-solid fa-italic"></i></button>
-                        <button class="button__toggle button__styles" title="Underline"><i class="fa-solid fa-underline"></i></button>
-                        <button class="button__toggle button__styles" title="Strikethrough"><i class="fa-solid fa-strikethrough"></i></button>
+                        <button id="boldBTN" class="button__toggle button__styles" title="Bold"><i class="fa-solid fa-bold"></i></button>
+                        <button id="italicBTN" class="button__toggle button__styles" title="Italic"><i class="fa-solid fa-italic"></i></button>
+                        <button id="underlineBTN" class="button__toggle button__styles" title="Underline"><i class="fa-solid fa-underline"></i></button>
+                        <button id="strikethroughBTN" class="button__toggle button__styles" title="Strikethrough"><i class="fa-solid fa-strikethrough"></i></button>
                     </div>
                     <div class="subsup__wrapper">
-                        <button class="button__toggle button__sup" title="Superscript"><i class="fa-solid fa-superscript"></i></button>
-                        <button class="button__toggle button__sub" title="Subscript"><i class="fa-solid fa-subscript"></i></button>
+                        <button id="superscriptBTN" class="button__toggle button__sup" title="Superscript"><i class="fa-solid fa-superscript"></i></button>
+                        <button id="subscriptBTN" class="button__toggle button__sub" title="Subscript"><i class="fa-solid fa-subscript"></i></button>
                     </div>
                     <div class="clear__wrapper">
-                        <button class="button__toggle button__clear" title="Clear Formating"><i class="fa-solid fa-eraser"></i></button>
+                        <button id="clearformatBTN" class="button__toggle button__clear" title="Clear Formating"><i class="fa-solid fa-eraser"></i></button>
                     </div>
                     <div class="align__wrapper">
-                        <button class="button__toggle button__align" title="Align Left"><i class="fa-solid fa-align-left"></i></button>
-                        <button class="button__toggle button__align" title="Align Center"><i class="fa-solid fa-align-center"></i></button>
-                        <button class="button__toggle button__align" title="Align Right"><i class="fa-solid fa-align-right"></i></button>
-                        <button class="button__toggle button__align" title="Align Justify"><i class="fa-solid fa-align-justify"></i></button>
+                        <button id="alignleftBTN" class="button__toggle button__align" title="Align Left"><i class="fa-solid fa-align-left"></i></button>
+                        <button id="aligncenterBTN" class="button__toggle button__align" title="Align Center"><i class="fa-solid fa-align-center"></i></button>
+                        <button id="alignrightBTN" class="button__toggle button__align" title="Align Right"><i class="fa-solid fa-align-right"></i></button>
+                        <button id="alignjustifyBTN" class="button__toggle button__align" title="Align Justify"><i class="fa-solid fa-align-justify"></i></button>
                     </div>
                 </div>
             </div>
@@ -265,14 +270,34 @@
         <div class="paper__container">
             <div class="paper__wrapper">
                 <div class="paper">
-                    <div class="editor" contenteditable="true"></div>
-                </div>
-                <div class="paper">
-                    <div class="editor" contenteditable="true"></div>
+                    <div class="editor" contenteditable="true">
+                        <table style="border-collapse: collapse; width: 100%; border-width: 1px;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%; text-align: center;">No</td>
+                                    <td style="width: 50%; text-align: center;">Name</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>{ forloop_table field }</p>
+                        <table style="border-collapse: collapse; width: 100%; border-width: 1px;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%; text-align: center;">field_no</td>
+                                    <td style="width: 50%; text-align: center;">field_name</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>{ endfor }</p>
+                        <p>djksjdks</p>
+                        <p>djksjdksd</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- <div>
+    </div> -->
     <script src="scripts.js"></script>
 </body>
 </html>

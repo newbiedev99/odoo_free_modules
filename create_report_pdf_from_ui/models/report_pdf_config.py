@@ -27,7 +27,6 @@ class ReportPdfConfig(models.Model):
         ('draft', 'Draft'),
         ('active', 'Active'),
     ], default='draft')
-    there_is_a_report_layout = fields.Char(compute='_compute_there_is_a_report_layout', string='There is a Report Layout')
     
     _sql_constraints = [
         ('name_report_uniq', 'unique(name)', 'The name of the config must be unique, as it will be used as a prefix for the report template and paperformat. !')
@@ -44,33 +43,26 @@ class ReportPdfConfig(models.Model):
             result = re.sub(field, replace, result)
         return result
 
-    @api.depends(
-        'report_layout',
-    )
-    def _compute_there_is_a_report_layout(self):
-        for rec in self:
-            if rec.report_layout:
-                rec.there_is_a_report_layout = True
-                
-                # Normal Field such as Char, Integer, Float, Many2one(Char, Integer, Float)
-                result_layout = rec._normal_field(rec.report_layout)
-                print(type(result_layout))
-                print(result_layout)
-                print('REPORT LAYOUT => ', rec.report_layout)
-            else:
-                rec.there_is_a_report_layout = False
 
+    # def create_edit_report_layout(self):
+    #     self.ensure_one()
+    #     return {
+    #         'name': 'Create Report Layout',
+    #         'type': 'ir.actions.client',
+    #         'tag': 'create_report_pdf_from_ui_editor_template',
+    #         'target': 'main',
+    #         'params': {
+    #             'active_id': self.id,
+    #             'model_name': 'report.pdf.config',
+    #         }
+    #     }
     def create_edit_report_layout(self):
         self.ensure_one()
+        self.with_context(report_active_id=self.id)
         return {
-            'name': 'Create Report Layout',
-            'type': 'ir.actions.client',
-            'tag': 'create_report_pdf_from_ui_editor_template',
-            'target': 'main',
-            'params': {
-                'active_id': self.id,
-                'model_name': 'report.pdf.config',
-            }
+            'type': 'ir.actions.act_url',
+            'target': 'new',
+            'url': '/create-report-template',
         }
 
     def set_to_draft(self):

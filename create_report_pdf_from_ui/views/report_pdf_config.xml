@@ -21,13 +21,11 @@
                 <header>
                     <button string="Set to draft" states="active" name="set_to_draft" type="object" class="btn btn-secondary"/>
                     <button string="Set to active" states="draft" name="set_to_active" type="object" class="oe_highlight"/>
-                    <button string="Create Layout" name="create_edit_report_layout" attrs="{'invisible': [('there_is_a_report_layout', '!=', False)]}" type="object" class="oe_highlight"/>
-                    <button string="Edit Layout" name="create_edit_report_layout" attrs="{'invisible': [('there_is_a_report_layout', '=', False)]}" type="object" class="oe_highlight"/>
+                    <button string="Create or Edit Layout" name="create_edit_report_layout" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
                     <group>
-                        <field name="there_is_a_report_layout" invisible="1" />
                         <group name="left_config">
                             <field name="name" />
                             <field name="format" />
@@ -39,10 +37,10 @@
                         </group>
                         <group name="right_config">
                             <field name="model" />
-                            <field name="margin_top" readonly="1" />
-                            <field name="margin_bottom" readonly="1" />
-                            <field name="margin_left" readonly="1" />
-                            <field name="margin_right" readonly="1" />
+                            <field name="margin_top" readonly="0" />
+                            <field name="margin_bottom" readonly="0" />
+                            <field name="margin_left" readonly="0" />
+                            <field name="margin_right" readonly="0" />
                         </group>
                     </group>
                     <notebook>

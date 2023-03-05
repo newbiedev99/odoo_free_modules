@@ -6,12 +6,21 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+ul, ol {
+    display: block;
+    margin-left: 30px;
+}
+
 /* ALL */
 .editor__container {
     height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #333333;
+}
+
+button i {
+    color: #ECF2FF;
 }
 
 /* TOOLBAR */
@@ -78,7 +87,7 @@
 
 .button__selection i {
     font-size: 12px;
-    color: rgba(255, 255, 255, .7);
+    color: #ECF2FF;
 }
 
 .button__selection.active {
@@ -169,37 +178,11 @@
     vertical-align: middle;
 }
 
-.button__styles i {
-    color: #ECF2FF;
-    /* color: rgba(255, 255, 255, .7); */
-}
-
-.button__sub i,
-.button__sup i {
-    color: #ECF2FF;
-    /* color: #F2921D; */
-}
-
-.button__clear i {
-    color: #ECF2FF;
-    /* color: #FF9F9F; */
-}
-
-.button__align i {
-    color: #ECF2FF;
-}
-
-
 /* TOOLBAR TOOL */
 .toolbar__tool {
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-.button__undo i,
-.button__redo i {
-    color: #ECF2FF;
 }
 
 .button__undo.active i,
@@ -225,27 +208,8 @@
     font-weight: 500;
 }
 
-.button__save i {
-    color: white;
-}
-
-.button__find__replace i {
-    color: #ECF2FF;
-    /* color: #d1d5db; */
-}
-
 .button__break svg {
     fill: #ECF2FF;
-    /* fill: #FFFFFF; */
-}
-
-.button__image i {
-    color: #ECF2FF;
-    /* color: #be185d; */
-}
-
-.button__link {
-    color: #ECF2FF;
 }
 
 /* PAPER CONTENT */
@@ -264,8 +228,8 @@
 }
 .paper {
     margin: auto;
-    height: 210mm;
-    width: 297mm;
+    height: 296mm;
+    width: 210mm;
     background-color: white;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, .2);
 }
@@ -274,8 +238,6 @@
     width: 100%;
     border: 1px dotted black;
     color: black;
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 .editor:focus {
     outline: none;
