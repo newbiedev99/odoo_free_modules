@@ -7,6 +7,20 @@ window.addEventListener('load', (e) => {
     fontName.value = 'Arial'
     fontSize.value = '12 pt'
 
+    // Create the XMLHttpRequest object.
+    const ajax = new XMLHttpRequest();
+    // Initialize the request
+    ajax.open("GET", '/get-report-data');
+    // Send the request
+    ajax.send();
+    // Fired once the request completes successfully 
+    ajax.onreadystatechange = function(e) {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Get and convert the responseText into JSON
+            var response = JSON.parse(this.responseText);
+            console.log(response);
+        }    
+    }
 })
 
 // PAPER SETTING
@@ -354,17 +368,17 @@ buttonSave.addEventListener('click', (e) => {
     const data = {
         report_layout: elemHTML
     }
-    $.ajax({
-        url: "/get-report-data",
-        type: 'GET',
-        contentType: "application/json",
-        dataType: 'json',
-        success: function(response) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost:8099/get-report-data');
+    // Send the request
+    xhr.send(JSON.stringify(data));
+    // Fired once the request completes successfully 
+    xhr.onreadystatechange = function(e) {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            // Get and convert the responseText into JSON
+            var response = JSON.parse(xhr.responseText);
             console.log(response);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
+        }    
+    }
 })
 
