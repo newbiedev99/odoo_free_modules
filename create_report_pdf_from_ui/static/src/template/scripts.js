@@ -7,18 +7,27 @@ window.addEventListener('load', (e) => {
     fontName.value = 'Arial'
     fontSize.value = '12 pt'
 
-    // Create the XMLHttpRequest object.
+    // GET DATA FROM ODOO CONTROLLER WHEN INITIALIZED
     const ajax = new XMLHttpRequest();
-    // Initialize the request
     ajax.open("GET", '/get-report-data');
-    // Send the request
     ajax.send();
-    // Fired once the request completes successfully 
     ajax.onreadystatechange = function(e) {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            // Get and convert the responseText into JSON
             var response = JSON.parse(this.responseText);
-            console.log(response);
+            console.log(response)
+            compute_paper_size(
+                response.data.orientation,
+                response.data.page_height,
+                response.data.page_width,
+                response.data.paper_size
+            )
+            var paper_padding = {
+                paddingTop: response.data.margin_top,
+                paddingBottom: response.data.margin_bottom,
+                paddingRight: response.data.margin_right,
+                paddingLeft: response.data.margin_left,
+            }
+            onchangePadding(paper_padding)
         }    
     }
 })
@@ -212,8 +221,6 @@ imageButton.addEventListener('click', (e) => {
 const findReplaceButton = document.getElementById('findreplaceBTN')
 findReplaceButton.addEventListener('click', (e) => {
     tinymce.activeEditor.execCommand('SearchReplace');
-    // tinymce.activeEditor.execCommand('mceEmoticons');
-    // tinymce.activeEditor.execCommand('mceShowCharmap');
 })
 
 // LINK
@@ -360,23 +367,19 @@ buttonSave.addEventListener('click', (e) => {
         tinyMce.setAttribute('style', attrTinyMce)
         tinyMce.removeAttribute('data-mce-style')
     })
-    
     var elemHTML = editorWrapper.innerHTML
     elemHTML = elemHTML.replace(/<br( data-mce-bogus="1")?>/gm, '').replace(/<p><\/p>/gm, '')
     
-    const url = "/get-report-data";
+    // SEND DATA TO ODOO CONTROLLER
     const data = {
-        report_layout: elemHTML
+        report_layout: elemHTML,
     }
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost:8099/get-report-data');
-    // Send the request
-    xhr.send(JSON.stringify(data));
-    // Fired once the request completes successfully 
-    xhr.onreadystatechange = function(e) {
+    const ajax = new XMLHttpRequest();
+    ajax.open("POST", '/get-report-data');
+    ajax.send(JSON.stringify(data));
+    ajax.onreadystatechange = function(e) {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            // Get and convert the responseText into JSON
-            var response = JSON.parse(xhr.responseText);
+            var response = JSON.parse(ajax.responseText);
             console.log(response);
         }    
     }

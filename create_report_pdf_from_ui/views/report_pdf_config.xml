@@ -82,23 +82,10 @@
         <field name="view_id" ref="create_report_pdf_from_ui.report_pdf_config_view_form"/>
     </record>
 
-    <record id="report_pdf_editor_template" model="ir.actions.client">
-        <field name="name">Report PDF Editor</field>
-        <field name="tag">create_report_pdf_from_ui_editor_template</field>
-        <field name="target">main</field>
-    </record>
-
     <menuitem
         id="report_pdf_config_menu"
         name="Report PDF UI Configurations"
         action="create_report_pdf_from_ui.report_pdf_config_action"
-        parent="base.reporting_menuitem"
-        sequence="10"/>
-
-    <menuitem
-        id="report_pdf_editor_template_menu"
-        name="Report PDF Editor"
-        action="create_report_pdf_from_ui.report_pdf_editor_template"
         parent="base.reporting_menuitem"
         sequence="10"/>
 
