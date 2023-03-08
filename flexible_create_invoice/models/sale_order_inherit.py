@@ -94,6 +94,8 @@ class SaleOrder(models.Model):
                             invoice_vals['invoice_line_ids'].append((0, 0, pending_section._prepare_invoice_line()))
                             pending_section = None
                         key = '%s-%s' % (line.unique_line, line.product_id.id)
+                        if line.is_downpayment and final:
+                            invoice_vals['invoice_line_ids'].append((0, 0, line._prepare_invoice_line()))
                         if not line.is_downpayment and key in data.keys():
                             quantity_do = data[key]
                             invoice_vals['invoice_line_ids'].append(
