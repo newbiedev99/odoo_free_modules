@@ -102,6 +102,8 @@ class SaleOrder(models.Model):
                         invoice_item_sequence += 1
 
                     key = '%s-%s' % (line.unique_line, line.product_id.id)
+                    if line.is_downpayment and final:
+                            invoice_line_vals.append((0, 0, line._prepare_invoice_line()))
                     if not line.is_downpayment and key in data.keys():
                         quantity_do = data[key]
                         invoice_line_vals.append(
