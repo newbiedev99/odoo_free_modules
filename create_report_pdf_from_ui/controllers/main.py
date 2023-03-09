@@ -21,15 +21,12 @@ editor_template = jinja_env.get_template('template/tinymce.html')
 
 class ReportPdfFromUi(http.Controller):
     
-    report_id = 1
+    report_id = None
 
     @http.route(['/create-report-template'], type='http', auth='none', csrf=False)
-    def create_report_template(self, **kwargs):
+    def create_report_template(self, id, **kwargs):
+        self.report_id = int(id)
         report_config = request.env['report.pdf.config'].sudo().browse(self.report_id)
-        x = requests.get(
-            url='http://localhost:8099/get-report-data'
-        )
-        print(x.headers)
         return editor_template.render({
             'title': report_config.name,
             'report_layout': report_config.report_layout
@@ -52,12 +49,18 @@ class ReportPdfFromUi(http.Controller):
                     margin_bottom = report_config.margin_bottom,
                 )
             if request.httprequest.method == 'POST':
+                action_id = request.env.ref('create_report_pdf_from_ui.report_pdf_config_action')
                 data = dict(
-                    berhasil = True
+                    redirect_link = '/web#action=%s&model=report.pdf.config&view_type=form&id=%s' % (action_id.id, report_config.id)
                 )
+                print(data)
                 data_request = json.loads(request.httprequest.data)
                 report_config.write({
-                    'report_layout': data_request.get('report_layout', report_config.report_layout)
+                    'report_layout': data_request.get('report_layout', report_config.report_layout),
+                    'margin_top': data_request.get('margin_top', report_config.margin_top),
+                    'margin_bottom': data_request.get('margin_bottom', report_config.margin_bottom),
+                    'margin_left': data_request.get('margin_left', report_config.margin_left),
+                    'margin_right': data_request.get('margin_right', report_config.margin_right),
                 })
             return request.make_response(
                 data = json.dumps({
@@ -80,14 +83,6 @@ class ReportPdfFromUi(http.Controller):
                     ('Content-Type', 'application/json; charset=utf-8') 
                 ]
             )
-        
-        # print('DI SINIIIIIIIIIII')
-        # data = json.dumps({
-        #     'status': 'pass',
-        # })
-        # return data
-            # return json.dumps(res)
-        # if request.httprequest.method == 'POST':
-        #     return json.dumps({'success': True, 'status': 200})
-
     
+    def generate_link_redirect(self):
+        pass

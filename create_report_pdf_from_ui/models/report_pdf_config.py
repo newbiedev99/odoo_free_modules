@@ -7,6 +7,9 @@ class ReportPdfConfig(models.Model):
     _name = 'report.pdf.config'
     _description = 'Configuration Report PDF'
 
+    def _get_default_template(self):
+        return '<div class="paper"><div class="editor"></div></div>'
+
     name = fields.Char('Name', copy=False, required=True)
     model = fields.Char('Model Name', copy=False, required=True) 
     format = fields.Selection([(ps['key'], ps['description']) for ps in PAPER_SIZES], 'Paper size', default='A4', help="Select Proper Paper size")
@@ -22,7 +25,7 @@ class ReportPdfConfig(models.Model):
     margin_right = fields.Float('Right Margin (mm)')
     report_id = fields.Many2one('ir.actions.report', string='Report', copy=False)
     paperformat_id = fields.Many2one('report.paperformat', string='Paperformat', copy=False)
-    report_layout = fields.Html('Report Layout')
+    report_layout = fields.Html('Report Layout', default=lambda self: self._get_default_template())
     state = fields.Selection(selection=[
         ('draft', 'Draft'),
         ('active', 'Active'),
@@ -43,26 +46,13 @@ class ReportPdfConfig(models.Model):
             result = re.sub(field, replace, result)
         return result
 
-
-    # def create_edit_report_layout(self):
-    #     self.ensure_one()
-    #     return {
-    #         'name': 'Create Report Layout',
-    #         'type': 'ir.actions.client',
-    #         'tag': 'create_report_pdf_from_ui_editor_template',
-    #         'target': 'main',
-    #         'params': {
-    #             'active_id': self.id,
-    #             'model_name': 'report.pdf.config',
-    #         }
-    #     }
     def create_edit_report_layout(self):
         self.ensure_one()
         self.with_context(report_active_id=self.id)
         return {
             'type': 'ir.actions.act_url',
-            'target': 'new',
-            'url': '/create-report-template',
+            'target': 'self',
+            'url': '/create-report-template?id=%s' % (self.id),
         }
 
     def set_to_draft(self):

@@ -373,6 +373,10 @@ buttonSave.addEventListener('click', (e) => {
     // SEND DATA TO ODOO CONTROLLER
     const data = {
         report_layout: elemHTML,
+        margin_top: paperPadding.paddingTop,
+        margin_bottom: paperPadding.paddingBottom,
+        margin_left: paperPadding.paddingLeft,
+        margin_right: paperPadding.paddingRight,
     }
     const ajax = new XMLHttpRequest();
     ajax.open("POST", '/get-report-data');
@@ -380,7 +384,7 @@ buttonSave.addEventListener('click', (e) => {
     ajax.onreadystatechange = function(e) {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             var response = JSON.parse(ajax.responseText);
-            console.log(response);
+            window.location.assign(response.data.redirect_link)
         }    
     }
 })
