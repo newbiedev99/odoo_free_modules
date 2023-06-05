@@ -4,7 +4,8 @@ $(document).ready(function() {
         const showPasswordInput = showPasswordWrapper.querySelector('input')
         const showPasswordButton = showPasswordWrapper.querySelector('.show__password__button')
         const showPasswordIcon = showPasswordButton.querySelector('.show__password__icon')
-        showPasswordButton.addEventListener('click', () => {
+        showPasswordButton.addEventListener('click', (e) => {
+            e.preventDefault()
             const showPasswordInputType = showPasswordInput.getAttribute('type')
             if (showPasswordInputType === 'password') {
                 showPasswordIcon.classList.remove('fa-eye')
