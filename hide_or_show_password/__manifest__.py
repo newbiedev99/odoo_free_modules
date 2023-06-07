@@ -1,6 +1,6 @@
 {
     'name': 'Hide Or Show Password',
-    'version': '15.0.1.0.0',
+    'version': '15.0.2.0.0',
     'summary': """
         Show and Hide fields by typing a password, login form, signup form, user change password
     """,

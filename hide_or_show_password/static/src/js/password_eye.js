@@ -11,16 +11,18 @@ odoo.define('hide_or_show_password.password_eye', function(require) {
         _renderEdit: function () {
             this._prepareInput(this.$el);
             if (this.nodeOptions.show_or_hide) {
-                console.log(this)
                 if ($(this.$el).length && this.nodeOptions.isPassword){
                     var element = this.$el;
                     var self = this
                     $(document).ready(function(e){
-                        var style = $(self).attr('style')
-                        $(element).attr('style', 'width: calc(100% - 28px);' + style)
-                        var idIcon = 'ic_' + $(element).attr('id')
-                        var icon = $('<i/>').addClass('fa fa-eye show__password').attr('id', idIcon)
-                        $(element).after(icon)
+                        var span = $('<span/>').addClass('o_field_translate btn btn-link')
+                        var icon = $('<i/>').addClass('fa fa-eye')
+                        if ($(element).hasClass('o_field_translate')) {
+                            $(element).addClass('o_password_eye')
+                            $(span).addClass('o_field_translate_with_button_password_eye')
+                        }
+                        $(span).append(icon)
+                        $(element).after(span)
                         
                         $(icon).click(function(e){
                             if($(element).attr('type') == 'password'){
@@ -42,15 +44,14 @@ odoo.define('hide_or_show_password.password_eye', function(require) {
                     var element = this.$el;
                     var self = this
                     $(document).ready(function(e){
-                        var style = $(self).attr('style')
-                        $(element).attr('style', 'width: calc(100% - 28px);' + style)
-                        var idIcon = 'ic_' + $(element).attr('id')
-                        var classIcon = 'fa fa-eye show__password'
-                        if ($(element).hasClass('o_invisible_modifier')) {
-                            classIcon += ' o_invisible_modifier'
+                        var span = $('<span/>').addClass('o_field_translate btn btn-link')
+                        var icon = $('<i/>').addClass('fa fa-eye')
+                        if ($(element).hasClass('o_field_translate')) {
+                            $(element).addClass('o_password_eye')
+                            $(span).addClass('o_field_translate_with_button_password_eye')
                         }
-                        var icon = $('<i/>').addClass(classIcon).attr('id', idIcon)
-                        $(element).after(icon)
+                        $(span).append(icon)
+                        $(element).after(span)
                         
                         $(icon).click(function(e){
                             if($(icon).hasClass('fa-eye')){
