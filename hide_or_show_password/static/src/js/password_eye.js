@@ -46,10 +46,8 @@ odoo.define('hide_or_show_password.password_eye', function(require) {
                     $(document).ready(function(e){
                         var span = $('<span/>').addClass('o_field_translate btn btn-link')
                         var icon = $('<i/>').addClass('fa fa-eye')
-                        if ($(element).hasClass('o_field_translate')) {
-                            $(element).addClass('o_password_eye')
-                            $(span).addClass('o_field_translate_with_button_password_eye')
-                        }
+                        $(element).attr('style', 'width: 100%; padding-right: 25px')
+                        $(span).attr('style', 'margin-left: -35px')
                         $(span).append(icon)
                         $(element).after(span)
                         
