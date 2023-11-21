@@ -127,7 +127,7 @@ class LineImportWizard(models.TransientModel):
             move |= self.env['stock.move'].create(vals)
 
         if move:
-            return move.pickind_id
+            return move.picking_id
 
     def import_purchase_line(self, reader_line=[]):
         purchase_id = self.env['purchase.order'].browse(self.env.context.get('active_id'))
